@@ -76,6 +76,11 @@ eval "$(fzf --zsh)"
 
 # Programs
 
+# Everything in ~/.local/bin should be on the path
+# export PATH="$HOME/.local/bin:$PATH"
+. "$HOME/.local/bin/env"
+
+# Cargo (rust)
 . "$HOME/.cargo/env"
 
 # bun
@@ -88,3 +93,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/node_repl_history"
+
+# Deno
+. "$HOME/.deno/env"
+if [[ ":$FPATH:" != *":$HOME/.zsh/completions:"* ]]; then 
+  export FPATH="$HOME/.zsh/completions:$FPATH"; 
+fi
