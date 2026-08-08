@@ -83,19 +83,35 @@ eval "$(fzf --zsh)"
 # Cargo (rust)
 . "$HOME/.cargo/env"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun" # completions
-
-
-# Volta (node.js)
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/node_repl_history"
+# fnm
+FNM_PATH="${XDG_DATA_HOME:-$HOME/.local/share}/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell zsh)"
+  eval "$(fnm completions --shell zsh)"
+fi
 
 # Deno
 . "$HOME/.deno/env"
 if [[ ":$FPATH:" != *":$HOME/.zsh/completions:"* ]]; then 
   export FPATH="$HOME/.zsh/completions:$FPATH"; 
 fi
+
+# Vite+ bin (https://viteplus.dev)
+# . "$HOME/.vite-plus/env"
+
+# go
+export GOPATH="$HOME/go"
+export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:$GOPATH/bin"
+
+# opencode
+export PATH=$HOME/.opencode/bin:$PATH
+
+# pnpm
+export PNPM_HOME="$HOME/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
